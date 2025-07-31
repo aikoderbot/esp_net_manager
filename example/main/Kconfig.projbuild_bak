@@ -1,0 +1,70 @@
+menu "Example Configuration"
+
+    choice EXAMPLE_NET_MODE
+        prompt "Network Manager Example Mode"
+        default EXAMPLE_MODE_WIFI_STA
+        help
+            Select the network mode to demonstrate.
+
+        config EXAMPLE_MODE_WIFI_STA
+            bool "Wi-Fi Station Example"
+            help
+                Connects to a Wi-Fi network as a client.
+
+        config EXAMPLE_MODE_ETHERNET
+            bool "Ethernet Example"
+            help
+                Connects to a wired Ethernet network.
+
+        config EXAMPLE_MODE_AP_STA
+            bool "Wi-Fi AP+STA Provisioning Example"
+            help
+                Starts an Access Point and simultaneously tries to connect to a Wi-Fi network.
+    
+    endchoice
+
+    if EXAMPLE_MODE_WIFI_STA || EXAMPLE_MODE_AP_STA
+        config EXAMPLE_WIFI_SSID
+            string "Wi-Fi SSID"
+            default "Your-SSID"
+        
+        config EXAMPLE_WIFI_PASSWORD
+            string "Wi-Fi Password"
+            default "Your-Password"
+    endif
+
+    if EXAMPLE_MODE_WIFI_STA || EXAMPLE_MODE_ETHERNET
+        config EXAMPLE_USE_STATIC_IP
+            bool "Use Static IP"
+            default n
+            help
+                Enable to test static IP configuration instead of DHCP.
+
+        if EXAMPLE_USE_STATIC_IP
+            config EXAMPLE_STATIC_IP_ADDR
+                string "Static IP Address"
+                default "192.168.1.150"
+
+            config EXAMPLE_STATIC_IP_NETMASK
+                string "Static IP Netmask"
+                default "255.255.255.0"
+
+            config EXAMPLE_STATIC_IP_GATEWAY
+                string "Static IP Gateway"
+                default "192.168.1.1"
+
+            config EXAMPLE_STATIC_DNS_MAIN
+                string "Main DNS Server"
+                default "8.8.8.8"
+                help
+                    Primary DNS server address. Leave empty to not set.
+
+            config EXAMPLE_STATIC_DNS_BACKUP
+                string "Backup DNS Server"
+                default "1.1.1.1"
+                help
+                    Secondary DNS server address. Leave empty to not set.
+        endif
+    endif
+
+endmenu

@@ -1,0 +1,20 @@
+dependencies:
+  idf:
+    version: '>=5.4'
+  espressif/ethernet_init: ^0.5.0
+description: This component initializes Ethernet and wifi driver based on Espressif IoT Development
+  Framework Configuration.
+files:
+  exclude:
+  - .git
+  - dist
+keywords:
+  - "network"
+  - "wifi"
+  - "ethernet"
+  - "connection"
+  - "manager"
+repository: https://github.com/aikoderbot/esp_net_manager.git
+url: https://github.com/aikoderbot/esp_net_manager.git
+license: MIT
+version: 0.1.0

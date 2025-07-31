@@ -1,0 +1,77 @@
+menu "Network Manager Configuration"
+
+    config NET_MANAGER_WIFI_STA_ENABLED_DEFAULT
+        bool "Enable Wi-Fi Station (STA) by default"
+        default y
+        help
+            If selected, the Wi-Fi Station interface will be enabled by default when net_manager_start(NULL) is called.
+
+    config NET_MANAGER_WIFI_AP_ENABLED_DEFAULT
+        bool "Enable Wi-Fi Access Point (AP) by default"
+        default n
+        help
+            If selected, the Wi-Fi Access Point interface will be enabled by default for provisioning or other uses.
+
+    config NET_MANAGER_ETHERNET_ENABLED_DEFAULT
+        bool "Enable Ethernet by default"
+        default n
+        help
+            If selected, the Ethernet interface will be enabled by default.
+            NOTE: You must configure Ethernet PHY and GPIO settings under
+            'Component config -> Ethernet'.
+
+    if NET_MANAGER_WIFI_STA_ENABLED_DEFAULT
+        config NET_MANAGER_WIFI_STA_SSID_DEFAULT
+            string "Default Wi-Fi STA SSID"
+            default "Your-SSID"
+            help
+                Default Wi-Fi SSID for Station mode.
+
+        config NET_MANAGER_WIFI_STA_PASSWORD_DEFAULT
+            string "Default Wi-Fi STA Password"
+            default "Your-Password"
+            help
+                Default Wi-Fi Password for Station mode.
+    endif
+
+    if NET_MANAGER_WIFI_AP_ENABLED_DEFAULT
+        config NET_MANAGER_WIFI_AP_SSID_DEFAULT
+            string "Default Wi-Fi AP SSID"
+            default "ESP32-Provision-AP"
+            help
+                Default Wi-Fi SSID for Access Point mode.
+
+        config NET_MANAGER_WIFI_AP_PASSWORD_DEFAULT
+            string "Default Wi-Fi AP Password"
+            default "12345678"
+            help
+                Default Wi-Fi Password for Access Point mode. Must be 8-63 characters.
+
+        config NET_MANAGER_WIFI_AP_CHANNEL_DEFAULT
+            int "Default Wi-Fi AP Channel"
+            default 1
+            range 1 13
+            help
+                Default Wi-Fi channel for Access Point mode.
+
+        config NET_MANAGER_WIFI_AP_MAX_CONN_DEFAULT
+            int "Default Wi-Fi AP Max Connections"
+            default 4
+            range 1 10
+            help
+                Maximum number of clients that can connect to the AP.
+    endif
+
+    config NET_MANAGER_STA_RECONNECT_ATTEMPTS
+        int "Wi-Fi STA Reconnect Attempts"
+        default 10
+        help
+            Number of times to attempt reconnection after a disconnect. Set to -1 for infinite attempts.
+
+    config NET_MANAGER_CONNECT_TIMEOUT_MS
+        int "Connection Timeout (ms)"
+        default 15000
+        help
+            Timeout in milliseconds for a connection attempt (Wi-Fi STA or Ethernet).
+
+endmenu

@@ -1,0 +1,102 @@
+menu "Example Configuration"
+
+    help
+        Configure the network interfaces to be enabled in this example.
+        You can enable Wi-Fi STA, Wi-Fi AP, and Ethernet individually or in any combination.
+
+    # --- Wi-Fi Station Configuration ---
+    config EXAMPLE_WIFI_STA_ENABLED
+        bool "Enable Wi-Fi Station (STA)"
+        default y
+
+    if EXAMPLE_WIFI_STA_ENABLED
+        config EXAMPLE_WIFI_SSID
+            string "Wi-Fi SSID"
+            default "Your-SSID"
+        
+        config EXAMPLE_WIFI_PASSWORD
+            string "Wi-Fi Password"
+            default "Your-Password"
+
+        config EXAMPLE_WIFI_STA_USE_STATIC_IP
+            bool "Use Static IP for Wi-Fi STA"
+            default n
+            help
+                Enable to test static IP configuration for the Wi-Fi STA interface.
+
+        if EXAMPLE_WIFI_STA_USE_STATIC_IP
+            config EXAMPLE_WIFI_STA_STATIC_IP_ADDR
+                string "Wi-Fi STA Static IP Address"
+                default "192.168.1.150"
+
+            config EXAMPLE_WIFI_STA_STATIC_NETMASK
+                string "Wi-Fi STA Static IP Netmask"
+                default "255.255.255.0"
+
+            config EXAMPLE_WIFI_STA_STATIC_GATEWAY
+                string "Wi-Fi STA Static IP Gateway"
+                default "192.168.1.1"
+
+            config EXAMPLE_WIFI_STA_STATIC_DNS_MAIN
+                string "Wi-Fi STA Main DNS Server"
+                default "8.8.8.8"
+
+            config EXAMPLE_WIFI_STA_STATIC_DNS_BACKUP
+                string "Wi-Fi STA Backup DNS Server"
+                default "1.1.1.1"
+        endif
+    endif
+
+    # --- Wi-Fi Access Point Configuration ---
+    config EXAMPLE_WIFI_AP_ENABLED
+        bool "Enable Wi-Fi Access Point (AP)"
+        default n
+
+    if EXAMPLE_WIFI_AP_ENABLED
+        config EXAMPLE_AP_SSID
+            string "AP SSID"
+            default "ESP-Provision-AP"
+        
+        config EXAMPLE_AP_PASSWORD
+            string "AP Password (8+ chars)"
+            default "12345678"
+    endif
+
+    # --- Ethernet Configuration ---
+    config EXAMPLE_ETHERNET_ENABLED
+        bool "Enable Ethernet"
+        default n
+        help
+            Remember to configure PHY settings under 'Component config -> Ethernet'.
+
+    if EXAMPLE_ETHERNET_ENABLED
+        config EXAMPLE_ETHERNET_USE_STATIC_IP
+            bool "Use Static IP for Ethernet"
+            default n
+            help
+                Enable to test static IP configuration for the Ethernet interface.
+
+        if EXAMPLE_ETHERNET_USE_STATIC_IP
+            config EXAMPLE_ETHERNET_STATIC_IP_ADDR
+                string "Ethernet Static IP Address"
+                default "192.168.1.151" # 注意：默认值与Wi-Fi不同
+
+            config EXAMPLE_ETHERNET_STATIC_NETMASK
+                string "Ethernet Static IP Netmask"
+                default "255.255.255.0"
+
+            config EXAMPLE_ETHERNET_STATIC_GATEWAY
+                string "Ethernet Static IP Gateway"
+                default "192.168.1.1"
+
+            config EXAMPLE_ETHERNET_STATIC_DNS_MAIN
+                string "Ethernet Main DNS Server"
+                default "8.8.8.8"
+
+            config EXAMPLE_ETHERNET_STATIC_DNS_BACKUP
+                string "Ethernet Backup DNS Server"
+                default "1.1.1.1"
+        endif
+    endif
+
+endmenu
